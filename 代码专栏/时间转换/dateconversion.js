@@ -12,7 +12,6 @@ lastMonthDate.setDate(1)
 lastMonthDate.setMonth(lastMonthDate.getMonth() - 1)
 var lastYear = lastMonthDate.getFullYear()
 var lastMonth = lastMonthDate.getMonth()
-console.log(lastMonth)
 
 
 // 格局化日期：yyyy-MM-dd
@@ -23,7 +22,6 @@ function formatDate (date) {
   if (mymonth === 12) {
     myyear = myyear - 1
   }
-  console.log(myyear)
   if (mymonth < 10) {
     mymonth = '0' + mymonth
   }
@@ -33,10 +31,12 @@ function formatDate (date) {
   return (myyear + '-' + mymonth + '-' + myweekday)
 }
 
-// 获得某月的天数
+// 获得某月的天数(注:从0开始)
 function getMonthDays (myMonth) {
   var monthStartDate = new Date(nowYear, myMonth, 1)
+  console.log(monthStartDate)
   var monthEndDate = new Date(nowYear, myMonth + 1, 1)
+  console.log(monthEndDate)
   var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24)
   return days
 }
