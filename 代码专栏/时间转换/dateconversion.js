@@ -5,20 +5,25 @@ var now = new Date() // 当前日期
 var nowDayOfWeek = now.getDay() // 今天本周的第几天
 var nowDay = now.getDate() // 当前日
 var nowMonth = now.getMonth() // 当前月
-var nowYear = now.getYear() // 当前年
-nowYear += (nowYear < 2000) ? 1900 : 0 //
+var nowYear = now.getFullYear() // 当前年
+
 var lastMonthDate = new Date() // 上月日期
 lastMonthDate.setDate(1)
 lastMonthDate.setMonth(lastMonthDate.getMonth() - 1)
-var lastYear = lastMonthDate.getYear()
-console.log(lastYear)
+var lastYear = lastMonthDate.getFullYear()
 var lastMonth = lastMonthDate.getMonth()
+console.log(lastMonth)
+
 
 // 格局化日期：yyyy-MM-dd
 function formatDate (date) {
   var myyear = date.getFullYear()
   var mymonth = date.getMonth() + 1
   var myweekday = date.getDate()
+  if (mymonth === 12) {
+    myyear = myyear - 1
+  }
+  console.log(myyear)
   if (mymonth < 10) {
     mymonth = '0' + mymonth
   }
