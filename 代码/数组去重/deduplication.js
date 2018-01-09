@@ -1,6 +1,6 @@
 /*
 * 数组去重
-* 去重表示为key
+* 根据key去重
 * */
 function dedup (arr, key) {
   let ret = []
