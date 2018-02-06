@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>二维码</title>
+</head>
+<body>
+<div class="content">
+  <!--图片logo-->
+  <img id="userLogo" src="" hidden="">
+
+  <!--canvas-->
+  <div id="canvasbox">
+    <canvas width="400" height="400" id="mycanvas"></canvas>
+  </div>
+
+  <!--canvas转成src-->
+  <div class="finishPic">
+    <img id="finish_qrcord" src="">
+  </div>
+
+
+</div>
+
+<style>
+  body {
+    background: #ececec
+  }
+</style>
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/html2canvas.min.js"></script>
+<script src="js/jqueryqr.js"></script>
+<script src="js/qrcode.js"></script>
+<!--
+render:canvas / image / div   渲染模式     
+ecLevel:L:7% / M:15% / Q:25% / H:30%    二维码识别度（越大越容易扫描）
+-----------------------------------------------------------------------------------
+minVersion:6              二维码密度，推荐0-10
+fill:'#666'               二维码颜色
+background:'#fff'           二维码背景颜色
+text:'www.baidu.com'         最后扫出来的结果
+size:300                 二维码大小
+radius:50                点圆滑度,50以内
+quiet:4                  二维码边框
+------------------------------------------------------------------------------------
+mode:2                  不显示LOGO：0 / 文字且占整行：1 / 文字居中：2 / 图片且占整行：3 / 图片居中：4
+mSize:20                 logo大小
+mPosX:50                 logo水平坐标,50居中
+mPosY:50                 logo垂直坐标,50居中
+label:'扫码关注我'           logo文字
+fontname:'微软雅黑'          logo字体名
+fontcolor:'orange'          logo字体颜色
+image:image:$("#imgLogo")[0]   设置的时候，需要把mode改成4，调用整个图片控件
+-->
+<script>
+  $(document).ready(function () {
+    toDataURL('http://oimageb6.ydstatic.com/image?id=-7217542590838425656&product=adpublish&w=640&h=480&sc=0&rm=0', function (dataUrl) {
+      console.log('RESULT:', dataUrl);
+      var src = dataUrl;
+      $('#userLogo').attr("src", src);
+      var pic = new Image();
+      // pic.setAttribute("crossOrigin",'Anonymous');
+      pic.src = src;
+      pic.onload = function () {
+        $('#canvasbox').erweima({
+          text: 'www.baidu.com',
+          render: "canvas",
+          fill: '#000',
+          minVersion: 10,
+          size: 250,
+          mode: 4,
+          mSize: 20,
+          quiet: 3,
+          image: $("#userLogo")[0]
+        });
+        //转成图片
+        var mycanvas = document.getElementsByTagName('canvas')[0];
+        var img = convertCanvasToImage(mycanvas);
+        $('#finish_qrcord').attr("src", img.src);
+      };
+    })
+  });
+
+  //转成base64位图片，移动端可识别
+  function convertCanvasToImage(canvas) {
+    var image = new Image();
+    image.setAttribute("crossOrigin", 'Anonymous')
+    image.src = canvas.toDataURL("image/png");
+    return image;
+  }
+
+  function toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      }
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  }
+
+
+</script>
+
+</body>
+</html>
